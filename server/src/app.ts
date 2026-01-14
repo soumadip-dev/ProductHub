@@ -7,6 +7,9 @@ import { errorHandler, notFound } from './middlewares/error.middleware';
 import configureCors from './config/cors.config';
 import rateLimit, { type RateLimitRequestHandler } from 'express-rate-limit';
 import logger from './utils/logger.utils';
+import { healthCheck } from './controllers/health.controller';
+import { clerkMiddleware } from '@clerk/express'
+
 
 const app: Express = express();
 
@@ -25,13 +28,15 @@ const limiter: RateLimitRequestHandler = rateLimit({
 app.use(morgan('dev'));
 app.use(helmet());
 app.use(configureCors());
-app.use(express.json());
+app.use(express.json()); // parse json request to body
+app.use(express.urlencoded({ extended: true })); // parse form data (like html form)
 app.use(limiter);
 app.use((req: Request, res: Response, next: NextFunction) => {
   logger.info(`Received ${req.method} request to ${req.url} 📨`);
   logger.info(`Request body: ${JSON.stringify(req.body)}`);
   next();
 });
+app.use(clerkMiddleware())
 
 // Home route
 app.get('/', (req: Request, res: Response) => {
@@ -45,6 +50,11 @@ app.get('/', (req: Request, res: Response) => {
     success: true,
   });
 });
+
+// Health check route
+app.use('/api/health', healthCheck);
+
+
 
 // Error handling middlewares
 app.use(notFound);
