@@ -4,7 +4,9 @@
   A modern full-stack e-commerce platform built with TypeScript, featuring a React frontend, Node.js API, PostgreSQL database, and Clerk authentication.
 </p>
 
-![Demo App](https://github.com/burakorkmez/productify/blob/master/frontend/public/screenshot-for-readme.png)
+<div align="center">
+  <img src="./client/public/banner.png" alt="Banner" width="900">
+</div>
 
 ## 🔋 Features
 
