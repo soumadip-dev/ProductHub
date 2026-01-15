@@ -23,6 +23,10 @@ export async function getUserById(id: string) {
 }
 
 export async function updateUser(id: string, updates: Partial<NewUser>) {
+  const existineUser = await getUserById(id);
+  if (!existineUser) {
+    throw new Error('User with id ' + id + ' not found');
+  }
   const [user] = await db.update(users).set(updates).where(eq(users.id, id)).returning();
   return user;
 }
