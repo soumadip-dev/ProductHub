@@ -7,9 +7,12 @@ import { errorHandler, notFound } from './middlewares/error.middleware';
 import configureCors from './config/cors.config';
 import rateLimit, { type RateLimitRequestHandler } from 'express-rate-limit';
 import logger from './utils/logger.utils';
-import { healthCheck } from './controllers/health.controller';
-import { clerkMiddleware } from '@clerk/express'
+import healthRoutes from './routes/health.routes';
+import userRoutes from './routes/user.routes';
+import productRoutes from './routes/product.routes';
+import commentRoutes from './routes/comment.routes';
 
+import { clerkMiddleware } from '@clerk/express';
 
 const app: Express = express();
 
@@ -36,25 +39,26 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   logger.info(`Request body: ${JSON.stringify(req.body)}`);
   next();
 });
-app.use(clerkMiddleware())
+app.use(clerkMiddleware());
 
 // Home route
 app.get('/', (req: Request, res: Response) => {
   res.status(200).json({
     message: 'ProductHub server is running 🏚️',
     endpoint: {
-      "users": "/api/users",
-      "products": "/api/products",
-      "comments": "/api/comments",
+      health: '/api/health',
+      users: '/api/users',
+      products: '/api/products',
+      comments: '/api/comments',
     },
     success: true,
   });
 });
 
-// Health check route
-app.use('/api/health', healthCheck);
-
-
+app.use('/api/health', healthRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/products', productRoutes);
+app.use('/api/comments', commentRoutes);
 
 // Error handling middlewares
 app.use(notFound);
