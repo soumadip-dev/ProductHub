@@ -32,11 +32,15 @@ export async function updateUser(id: string, updates: Partial<NewUser>) {
 }
 
 export async function upsertUser(userData: NewUser) {
-  const existineUser = await getUserById(userData.id);
-  if (existineUser) {
-    return updateUser(userData.id, userData);
-  }
-  return createUser(userData);
+  const [user] = await db
+    .insert(users)
+    .values(userData)
+    .onConflictDoUpdate({
+      target: users.id,
+      set: userData,
+    })
+    .returning();
+  return user;
 }
 
 //* PRODUCT QUERIES
