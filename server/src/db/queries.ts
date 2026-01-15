@@ -90,8 +90,23 @@ export async function deleteProduct(id: string) {
 
 //* COMMENT QUERIES
 
-export async function createComment(commentData: NewComment) {}
+export async function createComment(commentData: NewComment) {
+  const [comment] = await db.insert(comments).values(commentData).returning();
+  return comment;
+}
 
-export async function getCommentById(id: string) {}
+export async function getCommentById(id: string) {
+  return db.query.comments.findFirst({
+    where: eq(comments.id, id),
+    with: { user: true },
+  });
+}
 
-export async function deleteComment(id: string) {}
+export async function deleteComment(id: string) {
+  const existinecomment = await getCommentById(id);
+  if (!existinecomment) {
+    throw new Error('Comment with id ' + id + ' not found');
+  }
+  const [comment] = await db.delete(comments).where(eq(comments.id, id)).returning();
+  return comment;
+}
