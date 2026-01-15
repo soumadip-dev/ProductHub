@@ -8,8 +8,7 @@
     "dev": "bun --watch src/server.ts",
     "start": "bun src/server.ts",
     "build": "bun build src/server.ts --outdir dist",
-    "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate"
+    "db:push": "drizzle-kit push"
   },
   "dependencies": {
     "@clerk/express": "^1.7.62",
