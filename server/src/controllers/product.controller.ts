@@ -65,8 +65,15 @@ async function getProductById(req: Request, res: Response) {
         error: 'Missing required fields',
       });
     }
+    if (Array.isArray(id)) {
+      logger.warn('⚠️ Invalid product ID - expected single value');
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid product ID',
+      });
+    }
 
-    const product = await queries.getProductById(JSON.stringify(id));
+    const product = await queries.getProductById(id);
     if (!product) {
       logger.warn(`❌ Product not found with ID: ${id}`);
       return res.status(404).json({
@@ -161,6 +168,15 @@ async function updateProduct(req: Request, res: Response) {
         error: 'Missing required fields',
       });
     }
+
+    if (Array.isArray(id)) {
+      logger.warn('⚠️ Invalid product ID - expected single value');
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid product ID',
+      });
+    }
+
     const { error } = validateProductUpdate(req.body);
     if (error) {
       logger.warn(`⚠️ Validation error: ${error.details[0]?.message}`);
@@ -171,7 +187,7 @@ async function updateProduct(req: Request, res: Response) {
     }
     const { title, description, imageUrl } = req.body;
 
-    const existingProduct = await queries.getProductById(JSON.stringify(id));
+    const existingProduct = await queries.getProductById(id);
     if (!existingProduct) {
       logger.warn(`❌ Product not found - ID: ${id}`);
       return res.status(404).json({
@@ -221,6 +237,7 @@ async function deleteProduct(req: Request, res: Response) {
       });
     }
     const { id } = req.params;
+
     if (!id) {
       logger.warn('🚫 Missing required fields - Product ID is required');
       return res.status(400).json({
@@ -228,7 +245,15 @@ async function deleteProduct(req: Request, res: Response) {
         error: 'Missing required fields',
       });
     }
-    const existingProduct = await queries.getProductById(JSON.stringify(id));
+
+    if (Array.isArray(id)) {
+      logger.warn('⚠️ Invalid product ID - expected single value');
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid product ID',
+      });
+    }
+    const existingProduct = await queries.getProductById(id);
     if (!existingProduct) {
       logger.warn(`❌ Product not found - ID: ${id}`);
       return res.status(404).json({
@@ -244,7 +269,7 @@ async function deleteProduct(req: Request, res: Response) {
       });
     }
 
-    await queries.deleteProduct(JSON.stringify(id));
+    await queries.deleteProduct(id);
     logger.info(`✅ Product deleted successfully - ID: ${id}`);
     res.status(200).json({
       success: true,
