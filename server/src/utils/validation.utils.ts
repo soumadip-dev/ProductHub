@@ -14,8 +14,6 @@ interface ProductData {
 
 interface CommentData {
   content: string;
-  userId: string;
-  productId: string;
 }
 
 const validateUser = (data: Partial<UserData>) => {
@@ -47,4 +45,12 @@ const validateProductUpdate = (data: Partial<ProductData>): ValidationResult => 
   return schema.validate(data, { stripUnknown: true });
 };
 
-export { validateUser, validateProductCreate, validateProductUpdate };
+const validateComment = (data: Partial<CommentData>): ValidationResult => {
+  const schema = Joi.object<CommentData>({
+    content: Joi.string().min(1).max(2000).required(),
+  });
+
+  return schema.validate(data);
+};
+
+export { validateUser, validateProductCreate, validateProductUpdate, validateComment };
