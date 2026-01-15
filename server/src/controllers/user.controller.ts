@@ -31,6 +31,7 @@ async function syncUser(req: Request, res: Response) {
 
     res.status(200).json({
       success: true,
+      message: 'User synced successfully',
       data: user,
     });
   } catch (error) {
