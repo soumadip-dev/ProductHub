@@ -37,17 +37,56 @@ export async function upsertUser(userData: NewUser) {
 
 //* PRODUCT QUERIES
 
-export async function createProduct(productData: NewProduct) {}
+export async function createProduct(productData: NewProduct) {
+  const [product] = await db.insert(products).values(productData).returning();
+  return product;
+}
 
-export async function getAllProducts() {}
+export async function getAllProducts() {
+  return db.query.products.findMany({
+    with: { user: true },
+    orderBy: (products, { desc }) => [desc(products.createdAt)],
+  });
+}
 
-export async function getProductById(id: string) {}
+export async function getProductById(id: string) {
+  return db.query.products.findFirst({
+    where: eq(products.id, id),
+    with: {
+      user: true,
+      comments: {
+        with: { user: true },
+        orderBy: (comments, { desc }) => [desc(comments.createdAt)],
+      },
+    },
+  });
+}
 
-export async function getProductByUserId(userId: string) {}
+export async function getProductByUserId(userId: string) {
+  return db.query.products.findMany({
+    where: eq(products.userId, userId),
+    with: { user: true },
+    orderBy: (products, { desc }) => [desc(products.createdAt)],
+  });
+}
 
-export async function updateProduct(id: string, updates: Partial<NewProduct>) {}
+export async function updateProduct(id: string, updates: Partial<NewProduct>) {
+  const existineproduct = await getProductById(id);
+  if (!existineproduct) {
+    throw new Error('Product with id ' + id + ' not found');
+  }
+  const [product] = await db.update(products).set(updates).where(eq(products.id, id)).returning();
+  return product;
+}
 
-export async function deleteProduct(id: string) {}
+export async function deleteProduct(id: string) {
+  const existineproduct = await getProductById(id);
+  if (!existineproduct) {
+    throw new Error('Product with id ' + id + ' not found');
+  }
+  const [product] = await db.delete(products).where(eq(products.id, id)).returning();
+  return product;
+}
 
 //* COMMENT QUERIES
 
