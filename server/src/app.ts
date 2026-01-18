@@ -45,12 +45,7 @@ app.use(clerkMiddleware());
 app.get('/', (req: Request, res: Response) => {
   res.status(200).json({
     message: 'ProductHub server is running 🏚️',
-    endpoint: {
-      health: '/api/health',
-      users: '/api/users',
-      products: '/api/products',
-      comments: '/api/comments',
-    },
+
     success: true,
   });
 });
