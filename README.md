@@ -24,7 +24,7 @@
 ## ⚙️ Tech Stack
 
 - **🎨 Frontend**: React, TypeScript, Tailwind CSS, DaisyUI, TanStack Query, Clerk
-- **🛠 Backend**: Node.js, Express.js, TypeScript
+- **🛠 Backend**: Bun, Express.js, TypeScript
 - **🗄 Database**: PostgreSQL, Drizzle ORM
 - **🔐 Authentication**: Clerk
 - **📦 State Management**: TanStack Query, React Context
