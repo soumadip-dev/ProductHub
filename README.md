@@ -43,7 +43,7 @@ cd ProductHub
 
 ```bash
 cd server
-pnpm install
+bun install
 ```
 
 Create a `.env` file in the `server` directory with the following variables:
@@ -77,7 +77,7 @@ VITE_API_URL=http://localhost:3000/api
 
 ```bash
 cd server
-pnpm run dev
+bun run dev
 ```
 
 - **Frontend (Terminal 2)**:
