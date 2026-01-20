@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@clerk/clerk-react": "^5.59.4",
+    "@clerk/themes": "^2.4.48",
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/react-query": "^5.90.19",
     "axios": "^1.13.2",

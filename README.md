@@ -52,7 +52,7 @@ Create a `.env` file in the `server` directory with the following variables:
 PORT=<YOUR_PORT_NUMBER>
 DATABASE_URL=<YOUR_DB_URL>
 NODE_ENV=<YOUR_NODE_ENV>
-FRONTEND_URL=<YOUR_FRONTEND_URL>
+FRONTEND_URL=http://localhost:5173
 CLERK_PUBLISHABLE_KEY=<YOUR_CLERK_PUBLISHABLE_KEY>
 CLERK_SECRET_KEY=<YOUR_CLERK_SECRET_KEY>
 ```
@@ -61,14 +61,14 @@ CLERK_SECRET_KEY=<YOUR_CLERK_SECRET_KEY>
 
 ```bash
 cd ../client
-pnpm install
+bun install
 ```
 
 Create a `.env` file in the `client` directory with the following variables:
 
 ```env
 VITE_CLERK_PUBLISHABLE_KEY=<YOUR_CLERK_PUBLISHABLE_KEY>
-VITE_API_URL=http://localhost:3000/api
+VITE_API_URL=http://localhost:8080/api
 ```
 
 ### 4. Run the Application
@@ -84,5 +84,5 @@ bun run dev
 
 ```bash
 cd ../client
-pnpm run dev
+bun run dev
 ```
