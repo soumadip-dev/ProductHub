@@ -5,8 +5,20 @@ import ProductPage from './pages/ProductPage';
 import ProfilePage from './pages/ProfilePage';
 import CreatePage from './pages/CreatePage';
 import EditProductPage from './pages/EditProductPage';
+import useAuthReq from './hooks/useAuthReq';
+import useUserSync from './hooks/useUserSync';
+import { Loader } from 'lucide-react';
 
 export default function App() {
+  const { isClerkLoaded } = useAuthReq();
+  useUserSync();
+
+  if (!isClerkLoaded)
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <Loader className="animate-spin" size={40} />
+      </div>
+    );
   return (
     <div className="min-h-screen">
       <Navbar />

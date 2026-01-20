@@ -16,7 +16,7 @@ function useUserSync() {
 
     syncUserMutation({
       email: user.primaryEmailAddress.emailAddress,
-      name: user.fullName ?? user.firstName,
+      name: user.fullName || user.firstName,
       imageUrl: user.imageUrl,
     });
   }, [isSignedIn, user, isPending, isSuccess, syncUserMutation]);
