@@ -4,10 +4,11 @@ import { Link } from 'react-router';
 import ProductCard from '../components/ProductCard';
 import { useProducts } from '../hooks/useProducts';
 import { LoadingSpinner } from '../components/LoadingSpinner';
+import type { ProductWithUser } from '../types';
 
 export default function HomePage() {
   const { data, isLoading, error } = useProducts();
-  const products = data?.products ?? [];
+  const products: ProductWithUser[] = data?.data ?? [];
 
   if (isLoading) return <LoadingSpinner />;
 
@@ -92,7 +93,7 @@ export default function HomePage() {
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {products.map(product => (
+            {products.map((product: ProductWithUser) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
