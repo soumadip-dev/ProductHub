@@ -3,10 +3,12 @@ import { PackageIcon, SparklesIcon } from 'lucide-react';
 import { Link } from 'react-router';
 import ProductCard from '../components/ProductCard';
 import { useProducts } from '../hooks/useProducts';
-import { LoadingSpinner } from '../components/LoadingSpinner';
 import type { ProductWithUser } from '../types';
+import { LoadingSpinner } from '../components/LoadingSpinner';
+import useAuthReq from '../hooks/useAuthReq';
 
 export default function HomePage() {
+  const { isSignedIn } = useAuthReq();
   const { data, isLoading, error } = useProducts();
   const products: ProductWithUser[] = data?.data ?? [];
 
@@ -48,13 +50,24 @@ export default function HomePage() {
               Upload, discover, and connect with creators worldwide. Showcase your work to the right
               audience.
             </p>
-            <SignInButton mode="modal">
-              <button className="btn btn-primary btn-sm shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 transition-all duration-300">
+            {!isSignedIn ? (
+              <SignInButton mode="modal">
+                <button className="btn btn-primary btn-sm shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 transition-all duration-300">
+                  <SparklesIcon className="size-5" />
+                  Start Selling
+                  <span className="opacity-80 ml-1 text-sm">→</span>
+                </button>
+              </SignInButton>
+            ) : (
+              <Link
+                to="/create"
+                className="btn btn-primary btn-sm shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 transition-all duration-300"
+              >
                 <SparklesIcon className="size-5" />
                 Start Selling
                 <span className="opacity-80 ml-1 text-sm">→</span>
-              </button>
-            </SignInButton>
+              </Link>
+            )}
             <p className="mt-4 text-sm text-base-content/40">
               No credit card required • Get started in seconds
             </p>
@@ -73,11 +86,17 @@ export default function HomePage() {
               {products.length} items
             </span>
           </h2>
-          {products && products.length > 0 && (
-            <Link to="/create" className="btn btn-outline btn-sm">
-              + Add Product
-            </Link>
-          )}
+          {products &&
+            products.length > 0 &&
+            (isSignedIn ? (
+              <Link to="/create" className="btn btn-outline btn-sm">
+                + Add Product
+              </Link>
+            ) : (
+              <SignInButton mode="modal">
+                <button className="btn btn-outline btn-sm">+ Add Product</button>
+              </SignInButton>
+            ))}
         </div>
 
         {products.length === 0 ? (
@@ -86,9 +105,15 @@ export default function HomePage() {
               <PackageIcon className="size-16 text-base-content/20" />
               <h3 className="card-title text-base-content/50">No products yet</h3>
               <p className="text-base-content/40 text-sm">Be the first to share something!</p>
-              <Link to="/create" className="btn btn-primary btn-sm mt-2">
-                Create Product
-              </Link>
+              {!isSignedIn ? (
+                <SignInButton mode="modal">
+                  <button className="btn btn-primary btn-sm mt-2">Create Product</button>
+                </SignInButton>
+              ) : (
+                <Link to="/create" className="btn btn-primary btn-sm mt-2">
+                  Create Product
+                </Link>
+              )}
             </div>
           </div>
         ) : (

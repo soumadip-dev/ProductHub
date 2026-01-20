@@ -35,7 +35,6 @@ const ProductCard = ({ product }: ProductCardProps) => {
         <div className="divider my-1"></div>
 
         <div className="flex items-center justify-between">
-          {/* Always show user info since product always has user relation */}
           <div className="flex items-center gap-2">
             <div className="avatar">
               <div className="w-6 rounded-full ring-1 ring-primary">

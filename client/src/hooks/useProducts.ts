@@ -1,7 +1,7 @@
-import { useQuery } from '@tanstack/react-query';
-import { getAllProducts } from '../lib/api';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { createProduct, getAllProducts } from '../lib/api';
 
-export const useProducts = () => {
+function useProducts() {
   const result = useQuery({
     queryKey: ['products'],
     queryFn: getAllProducts,
@@ -10,4 +10,11 @@ export const useProducts = () => {
   });
 
   return result;
-};
+}
+
+function useCreateProduct() {
+  const createProductMutation = useMutation({ mutationFn: createProduct });
+  return createProductMutation;
+}
+
+export { useProducts, useCreateProduct };
