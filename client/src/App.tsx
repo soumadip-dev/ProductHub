@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router';
+import { Navigate, Route, Routes } from 'react-router';
 import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
 import ProductPage from './pages/ProductPage';
@@ -7,18 +7,13 @@ import CreatePage from './pages/CreatePage';
 import EditProductPage from './pages/EditProductPage';
 import useAuthReq from './hooks/useAuthReq';
 import useUserSync from './hooks/useUserSync';
-import { Loader } from 'lucide-react';
+import { LoadingSpinner } from './components/LoadingSpinner';
 
 export default function App() {
-  const { isClerkLoaded } = useAuthReq();
+  const { isClerkLoaded, isSignedIn } = useAuthReq();
   useUserSync();
 
-  if (!isClerkLoaded)
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <Loader className="animate-spin" size={40} />
-      </div>
-    );
+  if (!isClerkLoaded) return <LoadingSpinner />;
   return (
     <div className="min-h-screen">
       <Navbar />
@@ -26,9 +21,12 @@ export default function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/product/:id" element={<ProductPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/create" element={<CreatePage />} />
-          <Route path="/edit/:id" element={<EditProductPage />} />
+          <Route path="/profile" element={isSignedIn ? <ProfilePage /> : <Navigate to="/" />} />
+          <Route path="/create" element={isSignedIn ? <CreatePage /> : <Navigate to="/" />} />
+          <Route
+            path="/edit/:id"
+            element={isSignedIn ? <EditProductPage /> : <Navigate to="/" />}
+          />
         </Routes>
       </main>
     </div>
