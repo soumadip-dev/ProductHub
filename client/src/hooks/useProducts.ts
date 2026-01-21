@@ -19,7 +19,7 @@ function useCreateProduct() {
 
 function useProduct(id: string) {
   const result = useQuery({
-    queryKey: ['product', 'id'],
+    queryKey: ['product', id],
     queryFn: () => getProductById(id),
     enabled: !!id, // double bang operator to convert string to boolean
   });

@@ -68,7 +68,6 @@ function ConfirmationModal({
         aria-describedby="modal-description"
       >
         <div className="bg-base-100 rounded-xl w-full max-w-md shadow-2xl">
-          {/* Header */}
           <div className="flex items-center justify-between p-4 border-b border-base-300">
             <div className="flex items-center gap-3">
               <span className={`text-xl ${styles.iconColor}`} aria-hidden="true">
@@ -88,14 +87,12 @@ function ConfirmationModal({
             </button>
           </div>
 
-          {/* Body */}
           <div className="p-6">
             <div id="modal-description" className="text-base-content/80">
               {typeof message === 'string' ? <p>{message}</p> : message}
             </div>
           </div>
 
-          {/* Footer */}
           <div className="flex justify-end gap-3 p-4 border-t border-base-300">
             <button onClick={onClose} className="btn btn-ghost" disabled={isLoading}>
               {cancelText}
