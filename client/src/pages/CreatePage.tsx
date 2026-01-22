@@ -1,7 +1,7 @@
 import { useCreateProduct } from '../hooks/useProducts';
 import { ArrowLeftIcon, FileTextIcon, ImageIcon, SparklesIcon, TypeIcon } from 'lucide-react';
 import { Link, useNavigate } from 'react-router';
-import { createProductSchema, type CreateProductInput } from '../schemas/product.schema';
+import { createProductSchema, type CreateProductInput } from '../schemas/productSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm } from 'react-hook-form';
 
