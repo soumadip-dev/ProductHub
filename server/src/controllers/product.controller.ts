@@ -161,6 +161,7 @@ async function updateProduct(req: Request, res: Response) {
       });
     }
     const { id } = req.params;
+    logger.info(`Product ID=========================: ${id}`);
     if (!id) {
       logger.warn('🚫 Missing required fields - Product ID is required');
       return res.status(400).json({
@@ -203,7 +204,7 @@ async function updateProduct(req: Request, res: Response) {
       });
     }
 
-    const product = await queries.updateProduct(JSON.stringify(id), {
+    const product = await queries.updateProduct(id, {
       title,
       description,
       imageUrl,

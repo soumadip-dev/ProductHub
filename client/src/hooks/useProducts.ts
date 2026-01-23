@@ -5,6 +5,7 @@ import {
   getAllProducts,
   getMyProducts,
   getProductById,
+  updateProduct,
 } from '../lib/api';
 
 function useProducts() {
@@ -47,4 +48,16 @@ function useDeleteProduct() {
   return deleteProductMutation;
 }
 
-export { useProducts, useCreateProduct, useProduct, useDeleteProduct, useMyProducts };
+function useUpdateProduct() {
+  const updateProductMutation = useMutation({ mutationFn: updateProduct });
+  return updateProductMutation;
+}
+
+export {
+  useProducts,
+  useCreateProduct,
+  useProduct,
+  useDeleteProduct,
+  useMyProducts,
+  useUpdateProduct,
+};
