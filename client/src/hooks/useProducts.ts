@@ -1,12 +1,16 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { createProduct, deleteProduct, getAllProducts, getProductById } from '../lib/api';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  createProduct,
+  deleteProduct,
+  getAllProducts,
+  getMyProducts,
+  getProductById,
+} from '../lib/api';
 
 function useProducts() {
   const result = useQuery({
     queryKey: ['products'],
     queryFn: getAllProducts,
-    gcTime: 0,
-    refetchInterval: 1000 * 10,
   });
 
   return result;
@@ -25,8 +29,22 @@ function useProduct(id: string) {
   });
   return result;
 }
+
+function useMyProducts() {
+  return useQuery({
+    queryKey: ['myProducts'],
+    queryFn: getMyProducts,
+  });
+}
 function useDeleteProduct() {
-  const deleteProductMutation = useMutation({ mutationFn: deleteProduct });
+  const queryClient = useQueryClient();
+  const deleteProductMutation = useMutation({
+    mutationFn: deleteProduct,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['myProducts'] });
+    },
+  });
   return deleteProductMutation;
 }
-export { useProducts, useCreateProduct, useProduct, useDeleteProduct };
+
+export { useProducts, useCreateProduct, useProduct, useDeleteProduct, useMyProducts };
