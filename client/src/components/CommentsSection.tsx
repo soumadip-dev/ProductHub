@@ -51,14 +51,14 @@ export default function CommentsSection({
     );
   };
 
-  const handleDeleteComment = (commentId: string) => {
+  const handleDeleteComment = (commentId: string, productId: string) => {
     showConfirmation({
       title: 'Delete Comment',
       message: 'Are you sure you want to delete this comment? This action cannot be undone.',
       type: 'danger',
       confirmText: 'Delete',
       onConfirm: () => {
-        deleteComment.mutate({ commentId });
+        deleteComment.mutate({ commentId, productId });
       },
     });
   };
@@ -145,7 +145,7 @@ export default function CommentsSection({
                       type="button"
                       className="btn btn-ghost btn-xs text-error"
                       disabled={deleteComment.isPending}
-                      onClick={() => handleDeleteComment(comment.id)}
+                      onClick={() => handleDeleteComment(comment.id, productId)}
                     >
                       {deleteComment.isPending ? (
                         <span className="loading loading-spinner loading-xs" />

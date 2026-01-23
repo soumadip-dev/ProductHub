@@ -66,8 +66,10 @@ export const createComment = async ({
 
 export const deleteComment = async ({
   commentId,
+  productId,
 }: {
   commentId: string;
+  productId: string;
 }): Promise<{ success: boolean; message: string }> => {
   const { data } = await axiosInstance.delete(`/comments/${commentId}`);
   return data;
