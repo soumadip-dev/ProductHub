@@ -12,8 +12,3 @@ export const createProductSchema = z.object({
 });
 
 export type CreateProductInput = z.infer<typeof createProductSchema>;
-
-// Optional: Add update schema if needed
-export const updateProductSchema = createProductSchema.partial();
-
-export type UpdateProductInput = z.infer<typeof updateProductSchema>;

@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { createProduct, getAllProducts } from '../lib/api';
+import { createProduct, deleteProduct, getAllProducts, getProductById } from '../lib/api';
 
 function useProducts() {
   const result = useQuery({
@@ -17,4 +17,16 @@ function useCreateProduct() {
   return createProductMutation;
 }
 
-export { useProducts, useCreateProduct };
+function useProduct(id: string) {
+  const result = useQuery({
+    queryKey: ['product', id],
+    queryFn: () => getProductById(id),
+    enabled: !!id, // double bang operator to convert string to boolean
+  });
+  return result;
+}
+function useDeleteProduct() {
+  const deleteProductMutation = useMutation({ mutationFn: deleteProduct });
+  return deleteProductMutation;
+}
+export { useProducts, useCreateProduct, useProduct, useDeleteProduct };
