@@ -1,6 +1,3 @@
-// types.ts
-
-// Base types from Drizzle schema
 export interface User {
   id: string; // Clerk user ID
   email: string;
