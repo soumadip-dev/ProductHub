@@ -26,10 +26,10 @@ const ProductCard = ({ product }: ProductCardProps) => {
         />
       </figure>
       <div className="card-body p-4">
-        <h2 className="card-title text-base">
-          {product.title}
+        <div className="flex items-center justify-between">
+          <h2 className="card-title text-base line-clamp-1">{product.title}</h2>
           {isNew && <span className="badge badge-secondary badge-sm">NEW</span>}
-        </h2>
+        </div>
         <p className="text-sm text-base-content/70 line-clamp-2">{product.description}</p>
 
         <div className="divider my-1"></div>

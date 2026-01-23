@@ -79,7 +79,6 @@ function ProductPage() {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-6">
-          {/* Image */}
           <div className="card bg-base-300">
             <figure className="p-4">
               <img
@@ -92,7 +91,7 @@ function ProductPage() {
 
           <div className="card bg-base-300">
             <div className="card-body">
-              <h1 className="card-title text-2xl">{typedProduct.title}</h1>
+              <h1 className="card-title text-2xl line-clamp-1">{typedProduct.title}</h1>
 
               <div className="flex flex-wrap gap-4 text-sm text-base-content/60 my-2">
                 <div className="flex items-center gap-1">

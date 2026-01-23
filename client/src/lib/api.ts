@@ -38,7 +38,7 @@ export const createProduct = async (productData: ProductData): Promise<CreatePro
 
 export const updateProduct = async ({
   id,
-  ...productData
+  productData,
 }: {
   id: string;
   productData: ProductData;
