@@ -1,6 +1,6 @@
 import axios, { type AxiosInstance } from 'axios';
 
-const apiUrl = import.meta.env.VITE_API_URL;
+const apiUrl = import.meta.env.VITE_API_URL + '/api';
 
 if (!apiUrl) {
   throw new Error('VITE_API_URL environment variable is not defined');
